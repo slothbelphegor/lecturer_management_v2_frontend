@@ -1,0 +1,78 @@
+.myBackground {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #64dcde;
+    background-image: linear-gradient(0deg,rgba(100, 220, 222, 1) 0%, rgba(83, 45, 253, 1) 100%);
+}
+
+.whiteBox {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    min-width: 330px;
+    height: 70%;
+    width: 50%;
+    border: 1px solid #333
+}
+
+.itemBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 70px;
+    padding-bottom: 15px;
+}
+
+.title {
+    font-size: 33px;
+    color: #333;
+    font-family: 'Roboto', sans-serif;
+}
+
+.myForm, .myButton
+{
+    width: 100%;
+}
+
+.myButton {
+    background-color: #639fc7;
+}
+
+.Mui-selected {
+    background-color: #84bce2 !important;
+}
+
+.topbar {
+    display: flex;
+    padding: 10px;
+    background-color: rgb(18, 18, 146);
+    color: white;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.formBox {
+    width: 100%;
+    padding: 50px;
+    min-height: 100px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    box-shadow:#d6d6d6 0px 7px 29px 0px;
+}
+
+.formArea {
+    width: 33%;
+    padding: 15px;
+    margin-bottom: 20px;   
+}
+
+.fc-event {
+    cursor: pointer
+}
+
