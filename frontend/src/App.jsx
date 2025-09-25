@@ -25,7 +25,7 @@ import CreateLecturer from "./pages/lecturers/Create.jsx";
 import EditLecturer from "./pages/lecturers/Edit.jsx";
 import ListUser from "./pages/users/List.jsx";
 import EditUser from "./pages/users/Edit.jsx";
-import DeleteUser from "./pages/lecturers/Delete.jsx";
+import DeleteUser from "./pages/users/Delete.jsx";
 import ListSchedule from "./pages/schedules/List.jsx";
 import MyInfo from "./pages/lecturers/MyInfo.jsx";
 import ListEvaluation from "./pages/evaluations/List.jsx";
