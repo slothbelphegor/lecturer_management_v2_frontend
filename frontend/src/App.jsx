@@ -42,6 +42,8 @@ import DeleteRecommendation from "./pages/recommendations/Delete.jsx";
 import ListPotentialLecturer from "./pages/lecturers/ListPotentialLecturers.jsx";
 import CheckLecturer from "./pages/lecturers/Check.jsx";
 import MyAccount from "./pages/auth/MyAccount.jsx";
+import CreateUser from "./pages/users/Create.jsx";
+import DeleteLecturer from "./pages/lecturers/Delete.jsx";
 
 function App() {
   const location = useLocation();
@@ -61,6 +63,7 @@ function App() {
             <Route element={<ProtectedRoute />}>
               <Route path="/" element={<Home />} />
               <Route path="/lecturers" element={<ListLecturers />} />
+              <Route path="/lecturers/delete/:id" element={<DeleteLecturer />} />
               <Route
                 path="/lecturers/:id/schedules"
                 element={<ListSchedule />}
@@ -119,6 +122,7 @@ function App() {
               <Route path="/courses/delete/:id" element={<DeleteCourse />} />
             </Route>
             <Route path="/users" element={<ListUser />} />
+            <Route path="/users/create" element={<CreateUser />} />
             <Route path="/users/edit/:id" element={<EditUser />} />
             <Route path="/users/delete/:id" element={<DeleteUser />} />
             <Route

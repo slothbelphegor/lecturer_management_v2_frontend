@@ -1,6 +1,6 @@
-import * as React from 'react';
+import * as React from "react";
 import { useLocation, Link, useNavigate } from "react-router-dom";
-import getUserRole from '../GetUserRole';
+import getUserRole from "../GetUserRole";
 
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -19,18 +19,17 @@ import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import BookIcon from "@mui/icons-material/Book";
 import GroupIcon from "@mui/icons-material/Group";
-import ArticleIcon from "@mui/icons-material/Article"
+import ArticleIcon from "@mui/icons-material/Article";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import PersonIcon from "@mui/icons-material/Person";
 import InfoIcon from "@mui/icons-material/Info";
-import RecommendIcon from '@mui/icons-material/Recommend';
-import SchoolIcon from '@mui/icons-material/School';
-
+import RecommendIcon from "@mui/icons-material/Recommend";
+import SchoolIcon from "@mui/icons-material/School";
 
 export default function Menu() {
-  const [open, setOpen] = React.useState('')
+  const [open, setOpen] = React.useState("");
   const location = useLocation();
-  const currentRole = getUserRole()
+  const currentRole = getUserRole();
   const navigate = useNavigate();
   const currentPath = location.pathname;
   const handleClick = (section) => {
@@ -38,22 +37,18 @@ export default function Menu() {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('Token');
-    localStorage.removeItem('RefreshToken');
-    navigate('/login') // Redirect to login page after logout
-  }
+    localStorage.removeItem("Token");
+    localStorage.removeItem("RefreshToken");
+    navigate("/login"); // Redirect to login page after logout
+  };
 
   return (
     <List
-      sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
+      sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
       component="nav"
       aria-labelledby="nested-list-subheader"
     >
-      <ListItemButton
-        selected={"/" === currentPath}
-        to={"/"}
-        component={Link}
-    >
+      <ListItemButton selected={"/" === currentPath} to={"/"} component={Link}>
         <ListItemIcon>
           <HomeIcon />
         </ListItemIcon>
@@ -67,7 +62,7 @@ export default function Menu() {
         {open == "me" ? <ExpandLess /> : <ExpandMore />}
       </ListItemButton>
       <Collapse in={open == "me"} timeout="auto" unmountOnExit>
-<List component="div" disablePadding>
+        <List component="div" disablePadding>
           {["lecturer", "potential_lecturer"].includes(currentRole) && (
             <>
               <ListItemButton
@@ -136,82 +131,114 @@ export default function Menu() {
           </ListItemButton>
         </List>
       </Collapse>
-      <ListItemButton
-        selected={"/lecturers" === currentPath}
-        to={"/lecturers"}
-        component={Link}
-      > 
-        <ListItemIcon>
-          <GroupIcon />
-        </ListItemIcon>
-        <ListItemText primary="Lecturers" />
-        {"/lecturers" === currentPath ? <ExpandLess /> : <ExpandMore />}
-      </ListItemButton>
-      <Collapse in={currentPath.includes("/lecturer")} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
-          <ListItemButton 
-            sx={{ pl: 4 }}
-            selected={"/lecturers/registrations" === currentPath}
-            to={"/lecturers/registrations"}
+      {(["it_faculty", "education_department"].includes(currentRole) && (
+        <>
+          <ListItemButton
+            onClick={() => handleClick("lecturers")}
             component={Link}
+            to="/lecturers"
+            selected={"/lecturers" === currentPath}
+          >
+            <ListItemIcon>
+              <PeopleIcon />
+            </ListItemIcon>
+            <ListItemText primary="Lecturers" />
+            {open == "lecturers" ? <ExpandLess /> : <ExpandMore />}
+          </ListItemButton>
+          <Collapse in={open == "lecturers"} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              {
+                /* {['lecturer', 'potential_lecturer'].includes(currentRole) &&  */
+                <>
+                  <ListItemButton
+                    component={Link}
+                    to="/lecturers/registrations"
+                    selected={"/lecturers/registrations" === currentPath}
+                    sx={{ pl: 4 }}
+                  >
+                    <ListItemIcon>
+                      <QueueIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Registrations" />
+                  </ListItemButton>
+                  {currentRole === "it_faculty" && (
+                    <ListItemButton
+                      component={Link}
+                      to="/lecturers/recommendations"
+                      selected={"/lecturers/recommendations" === currentPath}
+                      sx={{ pl: 4 }}
+                    >
+                      <ListItemIcon>
+                        <RecommendIcon />
+                      </ListItemIcon>
+                      <ListItemText primary="Recommendations" />
+                    </ListItemButton>
+                  )}
+                </>
+              }
+            </List>
+          </Collapse>
+        </>
+      )) || (
+        <>
+          {currentRole !== "potential_lecturer" && (
+            <ListItemButton
+              onClick={() => handleClick("lecturers")}
+              component={Link}
+              to="/lecturers"
+              selected={"/lecturers" === path}
             >
-            <ListItemIcon>
-              <QueueIcon />
-            </ListItemIcon>
-            <ListItemText primary="Registrations" />
-          </ListItemButton>
-          <ListItemButton 
-            sx={{ pl: 4 }}
-            selected={"/lecturers/recommendations" === currentPath}
-            to={"/lecturers/recommendations"}
-            component={Link}>
-            <ListItemIcon>
-              <RecommendIcon />
-            </ListItemIcon>
-            <ListItemText primary="Recommendations" />
-          </ListItemButton>
-        </List>
-      </Collapse>
-      {currentRole !== "potential_lecturer" && (
-      <ListItemButton 
-        selected={"/courses" === currentPath}
-        to={"/courses"}
-        component={Link}
-        
-      >
-        <ListItemIcon>
-          <BookIcon />
-        </ListItemIcon>
-        <ListItemText primary="Courses" />
-      </ListItemButton>
+              <ListItemIcon>
+                <PeopleIcon />
+              </ListItemIcon>
+              <ListItemText primary="Lecturers" />
+            </ListItemButton>
+          )}
+        </>
       )}
-      <ListItemButton 
+
+      {currentRole !== "potential_lecturer" && (
+        <ListItemButton
+          selected={"/courses" === currentPath}
+          to={"/courses"}
+          component={Link}
+        >
+          <ListItemIcon>
+            <BookIcon />
+          </ListItemIcon>
+          <ListItemText primary="Courses" />
+        </ListItemButton>
+      )}
+      <ListItemButton
         selected={"/documents" === currentPath}
         to={"/documents"}
-        component={Link}>
+        component={Link}
+      >
         <ListItemIcon>
           <ArticleIcon />
         </ListItemIcon>
         <ListItemText primary="Documents" />
       </ListItemButton>
-      <ListItemButton 
-        selected={"/users" === currentPath}
-        to={"/users"}
-        component={Link}
-        
-      >
-        <ListItemIcon>
-          <AccountBoxIcon />
-        </ListItemIcon>
-        <ListItemText primary="Users" />
-      </ListItemButton>
-      <ListItemButton 
-        onClick={(event) => handleLogout(event)}
-      >
+      {["education_department"].includes(currentRole) && (
+        <>
+          <ListItemButton
+            selected={"/users" === currentPath}
+            to={"/users"}
+            component={Link}
+          >
+            <ListItemIcon>
+              <AccountBoxIcon />
+            </ListItemIcon>
+            <ListItemText primary="Users" />
+          </ListItemButton>
+        </>
+      )}
+
+      <ListItemButton onClick={(event) => handleLogout(event)}>
         <ListItemIcon>
           <LogoutIcon />
         </ListItemIcon>
-        <ListItemText primary="Logout"/>
+        <ListItemText primary="Logout" />
       </ListItemButton>
     </List>
   );

@@ -1,5 +1,11 @@
 import { use, useEffect, useState } from "react";
-import { Typography, Box, CircularProgress, Alert, Snackbar } from "@mui/material";
+import {
+  Typography,
+  Box,
+  CircularProgress,
+  Alert,
+  Snackbar,
+} from "@mui/material";
 import PeopleIcon from "@mui/icons-material/People";
 import AxiosInstance from "../../components/AxiosInstance";
 import MyPieChart from "../../components/charts/MyPieChart";
@@ -9,12 +15,13 @@ import MyStatBox from "../../components/statistics/MyStatBox";
 import getUserRole from "../../components/GetUserRole";
 
 export default function StaffHome() {
-  const [courseLecturerCount, setCourseLecturerCount] = useState([]);
-  const [degreeLecturerCount, setDegreeLecturerCount] = useState([]);
-  const [titleLecturerCount, setTitleLecturerCount] = useState([]);
+  const [courseLecturerCount, setCourseLecturerCount] = useState(null);
+  const [degreeLecturerCount, setDegreeLecturerCount] = useState(null);
+  const [titleLecturerCount, setTitleLecturerCount] = useState(null);
   const [allLecturersCount, setAllLecturersCount] = useState(0);
   const [potentialLecturersCount, setPotentialLecturersCount] = useState(0);
-  const [pendingRecommendationsCount, setPendingRecommendations] = useState(0);
+  const [pendingRecommendationsCount, setPendingRecommendationsCount] =
+    useState(null);
   const [pendingLecturers, setPendingLecturers] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -33,25 +40,33 @@ export default function StaffHome() {
         degreeLecturerRes,
         titleLecturerRes,
         allLecturersRes,
-        potentialLecturersRes,
-        pendingRecommendationsRes,
-        pendingLecturersRes,
       ] = await Promise.all([
         AxiosInstance.get("/courses/lecturer_count/"),
         AxiosInstance.get("/lecturers/degree_count/"),
         AxiosInstance.get("/lecturers/title_count/"),
         AxiosInstance.get("/lecturers/count_all_lecturers/"),
-        AxiosInstance.get("/lecturers/count_potential_lecturers/"),
-        AxiosInstance.get("/recommendations/count_unchecked/"),
-        AxiosInstance.get("/lecturers/count_pending_lecturers/"),
       ]);
-        setCourseLecturerCount(courseLecturerRes.data);
-        setDegreeLecturerCount(degreeLecturerRes.data);
-        setTitleLecturerCount(titleLecturerRes.data);
-        setAllLecturersCount(allLecturersRes.data);
+      setCourseLecturerCount(courseLecturerRes.data);
+      setDegreeLecturerCount(degreeLecturerRes.data);
+      setTitleLecturerCount(titleLecturerRes.data);
+      setAllLecturersCount(allLecturersRes.data);
+      if (["it_faculty", "education_department"].includes(role)) {
+        const potentialLecturersRes = await AxiosInstance.get(
+          "/lecturers/count_potential_lecturers/"
+        );
         setPotentialLecturersCount(potentialLecturersRes.data);
-        setPendingRecommendations(pendingRecommendationsRes.data);
-        setPendingLecturers(pendingLecturersRes.data);
+        if (role == "it_faculty") {
+          const pendingRecommendationsRes = await AxiosInstance.get(
+            "/recommendations/count_unchecked/"
+          );
+          setPendingRecommendationsCount(pendingRecommendationsRes.data);
+        } else {
+          const pendingLecturersRes = await AxiosInstance.get(
+            "/lecturers/count_pending_lecturers/"
+          );
+          setPendingLecturers(pendingLecturersRes.data);
+        }
+      }
     } catch (error) {
       console.error("Error fetching data:", error);
       setError("Failed to fetch data. Please try again later.");

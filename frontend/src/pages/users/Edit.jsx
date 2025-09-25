@@ -295,7 +295,7 @@ const EditUser = () => {
           severity="success"
           sx={{ width: "100%" }}
         >
-          Document edited successfully!
+          User edited successfully!
         </Alert>
       </Snackbar>
     </div>

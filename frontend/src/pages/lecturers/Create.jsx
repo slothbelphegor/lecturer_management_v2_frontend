@@ -3,7 +3,6 @@ import { Box, Typography, Snackbar, Alert } from "@mui/material";
 import { format } from "date-fns";
 
 import AddBoxIcon from "@mui/icons-material/AddBox";
-import DocumentForm from "../../components/forms/full_forms/DocumentForm";
 
 import AxiosInstance from "../../components/AxiosInstance";
 import LecturerInfoForm from "../../components/forms/full_forms/LecturerForm";
@@ -178,7 +177,7 @@ const CreateLecturer = () => {
           severity="success"
           sx={{ width: "100%" }}
         >
-          Document created successfully!
+          Lecturer created successfully!
         </Alert>
       </Snackbar>
     </>

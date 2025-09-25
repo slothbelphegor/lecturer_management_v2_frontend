@@ -6,9 +6,7 @@ import {
   useMaterialReactTable,
 } from "material-react-table";
 
-import EditIcon from "@mui/icons-material/Edit";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import QueueIcon from "@mui/icons-material/Queue";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddBoxIcon from '@mui/icons-material/AddBox';
@@ -248,24 +246,14 @@ const ListPotentialLecturer = () => {
         }}
       >
         <Box sx={{ display: "flex", alignItems: "center" }}>
-          <BookIcon />
+          <QueueIcon />
           <Typography
             sx={{ marginLeft: "15px", fontWeight: "bold" }}
             variant="subtitle2"
           >
-            List of Lecturers
+            List of Registrations
           </Typography>
         </Box>
-        <Box>
-            <MyButton
-              type="button"
-              label="Add New Lecturer"
-              startIcon={<AddBoxIcon />}
-              onClick={() => {
-                window.location.href = `/lecturers/create`;
-              }}
-            />
-          </Box>
       </Box>
       <MaterialReactTable table={table} />
     </>

@@ -9,24 +9,24 @@ import MyButton from "../../components/forms/MyButton";
 
 import AxiosInstance from "../../components/AxiosInstance";
 
-export default function DeleteUser() {
-  const [currentUser, setCurrentUser] = useState({});
+export default function DeleteLecturer() {
+  const [currentLecturer, setCurrentLecturer] = useState({});
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [message, setMessage] = useState("");
   const { id } = useParams();
 
   const getData = async () => {
-    if (!currentUser.id) {
+    if (!currentLecturer.id) {
       setIsLoading(true);
     }
     
     try {
-      const response = await AxiosInstance.get(`/users/${id}`);
-      setCurrentUser(response.data);
+      const response = await AxiosInstance.get(`/lecturers/${id}`);
+      setCurrentLecturer(response.data);
     } catch (error) {
       setIsError(true);
-      setMessage("Error fetching user details.");
+      setMessage("Error fetching lecturer details.");
     }
     setIsLoading(false);
   };
@@ -37,16 +37,16 @@ export default function DeleteUser() {
 
   const deleteRecord = (event) => {
     event.preventDefault();
-    console.log(currentUser)
+    console.log(currentLecturer)
     setIsLoading(true);
-    AxiosInstance.delete(`users/${id}/`)
+    AxiosInstance.delete(`lecturers/${id}/`)
       .then(() => {
         setIsError(false);
-        alert("User deleted successfully. Redirect to the list");
-        window.location.href = "/users";
+        alert("Lecturer deleted successfully. Redirect to the list");
+        window.location.href = "/lecturers";
       })
       .catch((error) => {
-        alert("An error occurred while deleting the user.");
+        alert("An error occurred while deleting the lecturer.");
         setIsError(true);
         setMessage(error.message);
         console.error(error);
@@ -76,14 +76,14 @@ export default function DeleteUser() {
           sx={{ marginLeft: "15px", fontWeight: "bold" }}
           variant="subtitle2"
         >
-          Are you sure that you want to delete this user?
+          Are you sure that you want to delete this lecturer?
         </Typography>
       </Box>
       <form onSubmit={deleteRecord}>
         <Box className="formBox" sx={{display: "flex", flexDirection: "column"}} onSubmit={deleteRecord}>
           <Box className="formArea">
             <Typography>
-              You will delete user <strong>{currentUser.username}</strong>.
+              You will delete lecturer <strong>{currentLecturer.name} - {currentLecturer.workplace}</strong>.
             </Typography>
           </Box>
           <Box sx={{ marginTop: "30px" }}>
