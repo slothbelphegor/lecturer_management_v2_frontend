@@ -23,7 +23,7 @@ const CreateEvaluation = () => {
   }
   const handleCloseSuccess = () => {
     setShowSuccess(false);
-    window.location.reload();
+    window.location.href = `/lecturers/${id}/evaluations`;
   };
 
   const getData = async () => {

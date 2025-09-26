@@ -186,7 +186,7 @@ export default function Menu() {
               onClick={() => handleClick("lecturers")}
               component={Link}
               to="/lecturers"
-              selected={"/lecturers" === path}
+              selected={"/lecturers" === currentPath}
             >
               <ListItemIcon>
                 <PeopleIcon />

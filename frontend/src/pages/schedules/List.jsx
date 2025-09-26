@@ -111,7 +111,9 @@ const ListSchedule = () => {
 
       const coursesResponse = await AxiosInstance.get("courses/all_courses/");
       setCourses(
-        Array.isArray(coursesResponse.data) ? coursesResponse.data : []
+        Array.isArray(coursesResponse.data) ? coursesResponse.data.filter(course => 
+            lecturerResponse.data.courses.includes(course.id)
+          ) : []
       );
     } catch (error) {
       setError("Error fetching data.");
@@ -301,12 +303,13 @@ const ListSchedule = () => {
         (course) => course.name == data.course
       ).id;
 
-      return AxiosInstance.patch(`schedules/${schedule.id}/`, {
+      return AxiosInstance.put(`schedules/${schedule.id}/`, {
         start: newStart.toISOString(),
         end: newEnd.toISOString(),
         course: selectedcourseId,
         place: data.place,
         notes: data.notes,
+        lecturer: currentLecturer.id,
       });
     });
 
