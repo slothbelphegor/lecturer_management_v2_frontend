@@ -15,7 +15,6 @@ export default function PotentialHome() {
       setCurrentStatus(response.data.status);
       setHasInfo(response.data && !!response.data.status);
     } catch (error) {
-      setError("Error fetching lecturer details.");
       console.log(error);
     } finally {
       setIsLoading(false);
