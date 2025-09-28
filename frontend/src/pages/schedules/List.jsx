@@ -35,8 +35,8 @@ import {
 const ListSchedule = () => {
   const params = useParams();
   const lecturer_id = params.id;
-  const navigate = useNavigate();
-  const [currentLecturer, setCurrentLecturer] = useState({});
+  // const navigate = useNavigate();
+  // const [currentLecturer, setCurrentLecturer] = useState({});
   const [schedules, setSchedules] = useState([]);
   const [courses, setCourses] = useState([]);
   const [selectedCourses, setSelectedCourses] = useState([]);
@@ -89,11 +89,11 @@ const ListSchedule = () => {
   const getData = async () => {
     setIsLoading(true);
     try {
-      const lecturerResponse = await AxiosInstance.get(
-        `lecturers/${lecturer_id}/`
-      );
-      setCurrentLecturer(lecturerResponse.data);
-      console.log("Current lecturer data:", lecturerResponse.data);
+      // const lecturerResponse = await AxiosInstance.get(
+      //   `lecturers/${lecturer_id}/`
+      // );
+      // setCurrentLecturer(lecturerResponse.data);
+      // console.log("Current lecturer data:", lecturerResponse.data);
 
       const schedulesResponse = await AxiosInstance.get(
         `schedules/by-lecturer/${lecturer_id}`
@@ -110,11 +110,12 @@ const ListSchedule = () => {
       setValue("course", selectedCourseIds);
 
       const coursesResponse = await AxiosInstance.get("courses/all_courses/");
-      setCourses(
-        Array.isArray(coursesResponse.data) ? coursesResponse.data.filter(course => 
-            lecturerResponse.data.courses.includes(course.id)
-          ) : []
-      );
+      // setCourses(
+      //   Array.isArray(coursesResponse.data) ? coursesResponse.data.filter(course => 
+      //       lecturerResponse.data.courses.includes(course.id)
+      //     ) : []
+      // );
+      setCourses(coursesResponse.data);
     } catch (error) {
       setError("Error fetching data.");
       console.error("Error fetching data:", error);
@@ -213,7 +214,7 @@ const ListSchedule = () => {
           // end: format(endDateTime, "yyyy-MM-dd'T'HH:mm:ss"),      // Changed this
           start: startISOString,
           end: endISOString,
-          lecturer: currentLecturer.id,
+          lecturer: lecturer_id,
           course: selectedcourseId,
           place: data.place,
           notes: data.notes,
@@ -309,7 +310,7 @@ const ListSchedule = () => {
         course: selectedcourseId,
         place: data.place,
         notes: data.notes,
-        lecturer: currentLecturer.id,
+        lecturer: lecturer_id,
       });
     });
 
@@ -473,7 +474,7 @@ const ListSchedule = () => {
             sx={{ marginLeft: "15px", fontWeight: "bold" }}
             variant="subtitle2"
           >
-            Lịch giảng dạy của giảng viên {currentLecturer.name}
+            Lịch giảng dạy của giảng viên
           </Typography>
         </Box>
         <Box></Box>
