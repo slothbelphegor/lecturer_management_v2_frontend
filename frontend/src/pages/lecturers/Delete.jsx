@@ -37,7 +37,6 @@ export default function DeleteLecturer() {
 
   const deleteRecord = (event) => {
     event.preventDefault();
-    console.log(currentLecturer)
     setIsLoading(true);
     AxiosInstance.delete(`lecturers/${id}/`)
       .then(() => {

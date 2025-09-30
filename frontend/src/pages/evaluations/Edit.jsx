@@ -3,7 +3,7 @@ import { Box, Typography, Snackbar, Alert } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { format } from "date-fns";
 
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import CircularProgress from "@mui/material/CircularProgress";
 import EvaluationForm from "../../components/forms/full_forms/EvaluationForm";
 
@@ -20,7 +20,7 @@ const EditEvaluation = () => {
   const handleCloseError = () => {
     setError(null);
     window.location.reload();
-  }
+  };
   const handleCloseSuccess = () => {
     setShowSuccess(false);
     window.location.reload();
@@ -46,16 +46,14 @@ const EditEvaluation = () => {
   const submission = (data) => {
     setIsSubmitting(true);
     setError(null);
-    console.log("Form data submitted:", data);
     AxiosInstance.put(`evaluations/${id}/`, {
-        title: data.title,
-        date: format(new Date(data.date), 'yyyy-MM-dd'),
-        type: data.type,
-        content: data.content,
-        lecturer: currentEvaluation.lecturer
+      title: data.title,
+      date: format(new Date(data.date), "yyyy-MM-dd"),
+      type: data.type,
+      content: data.content,
+      lecturer: currentEvaluation.lecturer,
     })
       .then((res) => {
-        console.log("Evaluation edited successfully:", res.data);
         setShowSuccess(true);
       })
       .catch((err) => {
@@ -67,7 +65,9 @@ const EditEvaluation = () => {
         if (errorData) {
           // Get the first error message from any field
           const firstErrorField = Object.values(errorData)[0];
-          errorMessage = Array.isArray(firstErrorField) ? firstErrorField[0] : "Unexpected error occurred.";
+          errorMessage = Array.isArray(firstErrorField)
+            ? firstErrorField[0]
+            : "Unexpected error occurred.";
         } else {
           errorMessage = "Unexpected error occurred while editing.";
         }

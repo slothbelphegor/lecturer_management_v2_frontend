@@ -20,7 +20,7 @@ export default function DeleteRecommendation() {
     if (!currentRecommendation.id) {
       setIsLoading(true);
     }
-    
+
     try {
       const response = await AxiosInstance.get(`/recommendations/${id}`);
       setCurrentRecommendation(response.data);
@@ -37,7 +37,6 @@ export default function DeleteRecommendation() {
 
   const deleteRecord = (event) => {
     event.preventDefault();
-    console.log(currentRecommendation)
     setIsLoading(true);
     AxiosInstance.delete(`recommendations/${id}/`)
       .then(() => {
@@ -65,7 +64,11 @@ export default function DeleteRecommendation() {
   }
 
   if (isLoading) {
-    return <Box sx={{ textAlign: "center", marginTop: "20px" }}><CircularProgress /></Box>;
+    return (
+      <Box sx={{ textAlign: "center", marginTop: "20px" }}>
+        <CircularProgress />
+      </Box>
+    );
   }
 
   return (
@@ -80,10 +83,15 @@ export default function DeleteRecommendation() {
         </Typography>
       </Box>
       <form onSubmit={deleteRecord}>
-        <Box className="formBox" sx={{display: "flex", flexDirection: "column"}} onSubmit={deleteRecord}>
+        <Box
+          className="formBox"
+          sx={{ display: "flex", flexDirection: "column" }}
+          onSubmit={deleteRecord}
+        >
           <Box className="formArea">
             <Typography>
-              You will delete recommendation of lecturer <strong>{currentRecommendation.name}.</strong>{" "}who works at{" "}
+              You will delete recommendation of lecturer{" "}
+              <strong>{currentRecommendation.name}.</strong> who works at{" "}
               <strong>{currentRecommendation.workplace}</strong>.
             </Typography>
           </Box>

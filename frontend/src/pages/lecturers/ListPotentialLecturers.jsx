@@ -7,16 +7,16 @@ import {
 } from "material-react-table";
 
 import QueueIcon from "@mui/icons-material/Queue";
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import DeleteIcon from "@mui/icons-material/Delete";
-import AddBoxIcon from '@mui/icons-material/AddBox';
-import BookIcon from '@mui/icons-material/Book';
+import AddBoxIcon from "@mui/icons-material/AddBox";
+import BookIcon from "@mui/icons-material/Book";
 import MyButton from "../../components/forms/MyButton";
 import AxiosInstance from "../../components/AxiosInstance";
 import getUserRole from "../../components/GetUserRole";
 
 const ListPotentialLecturer = () => {
-    const role = getUserRole();
+  const role = getUserRole();
   //data and fetching state
   const [lecturers, setLecturers] = useState([]);
   const [isError, setIsError] = useState(false);
@@ -40,8 +40,8 @@ const ListPotentialLecturer = () => {
         header: "Tên",
       },
       {
-        'accessorKey': "date",
-        'header': "Ngày đăng ký"
+        accessorKey: "date",
+        header: "Ngày đăng ký",
       },
       {
         accessorKey: "degree",
@@ -72,10 +72,10 @@ const ListPotentialLecturer = () => {
         ),
       },
       {
-        'accessorKey': "status",
-        'header': "Tình trạng hồ sơ"
+        accessorKey: "status",
+        header: "Tình trạng hồ sơ",
       },
-      
+
       {
         accessorKey: "recommender_details.full_name",
         header: "Người giới thiệu",
@@ -96,7 +96,10 @@ const ListPotentialLecturer = () => {
       } else {
         setIsRefetching(true);
       }
-      const url = new URL("/lecturers/potential_lecturers/", AxiosInstance.defaults.baseURL);
+      const url = new URL(
+        "/lecturers/potential_lecturers/",
+        AxiosInstance.defaults.baseURL
+      );
 
       // Add pagination parameters
       url.searchParams.append("page", pagination.pageIndex + 1); // Django uses 1-based pagination
@@ -125,7 +128,6 @@ const ListPotentialLecturer = () => {
       try {
         const response = await AxiosInstance.get(url);
         const json = response.data;
-        console.log(json)
         // Handle paginated response from DRF
         if (json.results && json.count !== undefined) {
           setLecturers(json.results);
@@ -181,48 +183,45 @@ const ListPotentialLecturer = () => {
     enableExpanding: true,
     renderDetailPanel: ({ row }) => (
       <Box sx={{ padding: 2, display: "flex", flexDirection: "column" }}>
-            <Typography variant="h6">Thông tin liên lạc</Typography>
-            <Typography variant="body1">
-              <strong>Tên:</strong> {row.original.name}
-            </Typography>
-            <Typography variant="body1">
-              <strong>Email:</strong> {row.original.email}
-            </Typography>
-            <Typography variant="body1">
-              <strong>Số điện thoại:</strong> {row.original.phone_number}
-            </Typography>
-            <Typography variant="body1">
-              <strong>Nơi công tác:</strong> {row.original.workplace}
-            </Typography>
-          </Box>
+        <Typography variant="h6">Thông tin liên lạc</Typography>
+        <Typography variant="body1">
+          <strong>Tên:</strong> {row.original.name}
+        </Typography>
+        <Typography variant="body1">
+          <strong>Email:</strong> {row.original.email}
+        </Typography>
+        <Typography variant="body1">
+          <strong>Số điện thoại:</strong> {row.original.phone_number}
+        </Typography>
+        <Typography variant="body1">
+          <strong>Nơi công tác:</strong> {row.original.workplace}
+        </Typography>
+      </Box>
     ),
     enableRowActions: true,
     positionActionsColumn: "last",
     renderRowActions: ({ row }) => (
       <Box sx={{ display: "flex", flexWrap: "nowrap", gap: "8px" }}>
-            
-            {["it_faculty", "education_department"].includes(role) && (
-            <IconButton
-              color="primary"
-              component={Link}
-              to={`/lecturers/check/${row.original.id}`}
-            >
-              <CheckCircleIcon />
-            </IconButton>
-            )}
-            
-            {role === "education_department" && (
-            <IconButton
-              color="error"
-              component={Link}
-              to={`/lecturers/delete/${row.original.id}`}
-            >
-              <DeleteIcon />
-            </IconButton>
-            )}
-            
-            
-          </Box>
+        {["it_faculty", "education_department"].includes(role) && (
+          <IconButton
+            color="primary"
+            component={Link}
+            to={`/lecturers/check/${row.original.id}`}
+          >
+            <CheckCircleIcon />
+          </IconButton>
+        )}
+
+        {role === "education_department" && (
+          <IconButton
+            color="error"
+            component={Link}
+            to={`/lecturers/delete/${row.original.id}`}
+          >
+            <DeleteIcon />
+          </IconButton>
+        )}
+      </Box>
     ),
     state: {
       columnFilters,
@@ -235,7 +234,7 @@ const ListPotentialLecturer = () => {
       sorting,
     },
   });
-  
+
   return (
     <>
       <Box

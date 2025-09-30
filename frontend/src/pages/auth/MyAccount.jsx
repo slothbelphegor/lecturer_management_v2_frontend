@@ -1,6 +1,5 @@
 import AxiosInstance from "../../components/AxiosInstance";
-import { React, useState, useEffect, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import {
   Box,
   Typography,
@@ -41,17 +40,16 @@ const MyAccount = () => {
     }
   };
 
-  const {  control } = useForm({
+  const { control } = useForm({
     values: {
-        username: currentUser.username,
-        email: currentUser.email
-    }
+      username: currentUser.username,
+      email: currentUser.email,
+    },
   });
 
   useEffect(() => {
     getData();
   }, []); // get data on initial load page
-
 
   return (
     <div>
@@ -126,8 +124,6 @@ const MyAccount = () => {
           {error}
         </Alert>
       </Snackbar>
-
-     
     </div>
   );
 };

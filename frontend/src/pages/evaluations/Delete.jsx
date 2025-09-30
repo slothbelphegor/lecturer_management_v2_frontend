@@ -61,7 +61,11 @@ export default function DeleteEvaluation() {
   }
 
   if (isLoading) {
-    return <Box sx={{ textAlign: "center", marginTop: "20px" }}><CircularProgress /></Box>;
+    return (
+      <Box sx={{ textAlign: "center", marginTop: "20px" }}>
+        <CircularProgress />
+      </Box>
+    );
   }
 
   return (
@@ -76,10 +80,14 @@ export default function DeleteEvaluation() {
         </Typography>
       </Box>
       <form onSubmit={deleteRecord}>
-        <Box className="formBox" sx={{display: "flex", flexDirection: "column"}} onSubmit={deleteRecord}>
+        <Box
+          className="formBox"
+          sx={{ display: "flex", flexDirection: "column" }}
+          onSubmit={deleteRecord}
+        >
           <Box className="formArea">
             <Typography>
-              You will delete <strong>{currentEvaluation.title}</strong>{" "} of date{" "}
+              You will delete <strong>{currentEvaluation.title}</strong> of date{" "}
               <strong>{currentEvaluation.date}</strong>.
             </Typography>
           </Box>

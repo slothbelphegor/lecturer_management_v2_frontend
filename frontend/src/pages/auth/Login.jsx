@@ -13,7 +13,6 @@ export default function Login() {
     // Login with simplejwt default endpoint
     setIsSubmitting(true);
     setError(null);
-    console.log("Form data submitted:", data);
     await AxiosInstance.post("api/token/", {
       username: data.username_or_email,
       password: data.password,

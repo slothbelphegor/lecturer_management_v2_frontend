@@ -1,6 +1,10 @@
 # lecturer_management_v2_frontend
 A React-based website for lecturer management, using this backend server: https://github.com/slothbelphegor/lecturer_management_v2_backend
-Uses JWT and RBAC for authorization.
+Uses JWT and RBAC for authorization. 
+
+## Link
+- Backend (must be booted before running frontend): https://lecturer-management-v2-backend.onrender.com
+- Frontend: https://lecturer-management-v2-frontend.onrender.com
 
 ## Features
 - People can register for teaching at the instituition by providing their information (profession, degree, degree, recommender, experience,...). These information can be updated after registration.

@@ -10,13 +10,12 @@ import ArticleIcon from "@mui/icons-material/Article";
 import EditIcon from "@mui/icons-material/Edit";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import DeleteIcon from "@mui/icons-material/Delete";
-import RecommendIcon from '@mui/icons-material/Recommend';
+import RecommendIcon from "@mui/icons-material/Recommend";
 
 import AxiosInstance from "../../components/AxiosInstance";
 import URLWithFilters from "../../components/URLWithFilters";
 
 const ListRecommendation = () => {
-
   //data and fetching state
   const [recommendations, setRecommendations] = useState([]);
   const [isError, setIsError] = useState(false);
@@ -48,7 +47,6 @@ const ListRecommendation = () => {
       {
         accessorKey: "recommender_details.name",
         header: "Người đề xuất",
-
       },
       {
         accessorKey: "course_names",
@@ -65,12 +63,10 @@ const ListRecommendation = () => {
         accessorKey: "status",
         header: "Trạng thái",
         size: 40,
-      },  
+      },
     ],
     []
   );
-
-  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -91,7 +87,6 @@ const ListRecommendation = () => {
       try {
         const response = await AxiosInstance.get(url);
         const json = response.data;
-        console.log(url)
         // Handle paginated response from DRF
         if (json.results && json.count !== undefined) {
           setRecommendations(json.results);
@@ -149,38 +144,33 @@ const ListRecommendation = () => {
     enableExpanding: true,
     renderDetailPanel: ({ row }) => (
       <Box sx={{ padding: 2 }}>
-            <Typography variant="h6" gutterBottom>
-              {"Lecturer Description:"}
-            </Typography>
-            <Typography variant="body2">
-              {row.original.content}
-            </Typography>
-          </Box>
+        <Typography variant="h6" gutterBottom>
+          {"Lecturer Description:"}
+        </Typography>
+        <Typography variant="body2">{row.original.content}</Typography>
+      </Box>
     ),
     enableRowActions: true,
     positionActionsColumn: "last",
     renderRowActions: ({ row, table }) => (
       <Box sx={{ display: "flex", flexWrap: "nowrap", gap: "8px" }}>
-
-            
-            <>
-            <IconButton
-              color="primary"
-              component={Link}
-              to={`/lecturers/recommendations/edit/${row.original.id}`}
-            >
-              <EditIcon />
-            </IconButton>
-            <IconButton
-              color="error"
-              component={Link}
-              to={`/lecturers/recommendations/delete/${row.original.id}`}
-            >
-              <DeleteIcon />
-            </IconButton>
-            </>
-            
-          </Box>
+        <>
+          <IconButton
+            color="primary"
+            component={Link}
+            to={`/lecturers/recommendations/edit/${row.original.id}`}
+          >
+            <EditIcon />
+          </IconButton>
+          <IconButton
+            color="error"
+            component={Link}
+            to={`/lecturers/recommendations/delete/${row.original.id}`}
+          >
+            <DeleteIcon />
+          </IconButton>
+        </>
+      </Box>
     ),
     state: {
       columnFilters,
@@ -193,7 +183,7 @@ const ListRecommendation = () => {
       sorting,
     },
   });
-  
+
   return (
     <>
       <Box
@@ -212,7 +202,6 @@ const ListRecommendation = () => {
             Lecturer Recommendations
           </Typography>
         </Box>
-
       </Box>
       <MaterialReactTable table={table} />
     </>

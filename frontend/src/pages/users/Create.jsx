@@ -38,27 +38,27 @@ const CreateUser = () => {
   };
 
   const schema = yup.object().shape({
-      username: yup.string().required("Username is required"),
-      email: yup
-        .string()
-        .email("Field expected an email address")
-        .required("Email is required"),
-      password: yup
-        .string()
-        .required("Password is required")
-        .min(8, "Password must be at least 8 characters long")
-        .matches(/[A-Z]/, "Password must contain at least 1 uppercase letter")
-        .matches(/[a-z]/, "Password must contain at least 1 lowercase letter")
-        .matches(/[0-9]/, "Password must contain at least 1 number")
-        .matches(
-          /[!@#$%^&*(),.?":{}|<>]/,
-          "Password must contain at least 1 special character"
-        ),
-      password2: yup
-        .string()
-        .required("Password confirmation is required")
-        .oneOf([yup.ref("password"), null], "Passwords must match"),
-    });
+    username: yup.string().required("Username is required"),
+    email: yup
+      .string()
+      .email("Field expected an email address")
+      .required("Email is required"),
+    password: yup
+      .string()
+      .required("Password is required")
+      .min(8, "Password must be at least 8 characters long")
+      .matches(/[A-Z]/, "Password must contain at least 1 uppercase letter")
+      .matches(/[a-z]/, "Password must contain at least 1 lowercase letter")
+      .matches(/[0-9]/, "Password must contain at least 1 number")
+      .matches(
+        /[!@#$%^&*(),.?":{}|<>]/,
+        "Password must contain at least 1 special character"
+      ),
+    password2: yup
+      .string()
+      .required("Password confirmation is required")
+      .oneOf([yup.ref("password"), null], "Passwords must match"),
+  });
 
   const getData = async () => {
     setIsLoadingLecturer(true);
@@ -89,10 +89,7 @@ const CreateUser = () => {
   const lecturerOptions = useMemo(
     () =>
       lecturers
-        ?.filter(
-          (l) =>
-            !l.user
-        )
+        ?.filter((l) => !l.user)
         .map((l) => ({
           value: l.id,
           id: l.id,
@@ -100,7 +97,6 @@ const CreateUser = () => {
         })) || [],
     [lecturers]
   );
-  console.log(lecturerOptions);
   const groupOptions = useMemo(
     () =>
       groups?.map((group) => ({
@@ -126,7 +122,6 @@ const CreateUser = () => {
   const submission = (data) => {
     setIsSubmitting(true);
     setError(null);
-    console.log("Form data submitted:", data);
     AxiosInstance.post(`users/`, {
       username: data.username,
       email: data.email,
@@ -135,7 +130,6 @@ const CreateUser = () => {
       password: data.password,
     })
       .then((res) => {
-        console.log("Response data: ", res.data);
         setShowSuccess(true);
       })
       .catch((err) => {
@@ -212,27 +206,27 @@ const CreateUser = () => {
               />
             </Box>
             <Box
-            className="formArea"
-            sx={{ gridColumn: "span 4", width: "100%" }}
-          >
-            <MyPasswordField
-              className="formField"
-              label={"Mật khẩu"}
-              name="password"
-              control={control}
-            />
-          </Box>
-          <Box
-            className="formArea"
-            sx={{ gridColumn: "span 4", width: "100%" }}
-          >
-            <MyPasswordField
-              className="formField"
-              label={"Nhập lại mật khẩu"}
-              name="password2"
-              control={control}
-            />
-          </Box>
+              className="formArea"
+              sx={{ gridColumn: "span 4", width: "100%" }}
+            >
+              <MyPasswordField
+                className="formField"
+                label={"Mật khẩu"}
+                name="password"
+                control={control}
+              />
+            </Box>
+            <Box
+              className="formArea"
+              sx={{ gridColumn: "span 4", width: "100%" }}
+            >
+              <MyPasswordField
+                className="formField"
+                label={"Nhập lại mật khẩu"}
+                name="password2"
+                control={control}
+              />
+            </Box>
             <Box
               className="formArea"
               sx={{ gridColumn: "span 4", width: "100%" }}

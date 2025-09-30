@@ -21,7 +21,7 @@ const EditCourse = () => {
   const handleCloseError = () => {
     setError(null);
     window.location.reload();
-  }
+  };
   const handleCloseSuccess = () => {
     setShowSuccess(false);
     window.location.href = "/courses";
@@ -40,9 +40,7 @@ const EditCourse = () => {
     }
   };
 
-  useEffect(() => {
-    console.log("Current course data:", currentCourse);
-  }, [currentCourse]);
+  useEffect(() => {}, [currentCourse]);
 
   useEffect(() => {
     getData();
@@ -51,7 +49,6 @@ const EditCourse = () => {
   const submission = (data) => {
     setIsSubmitting(true);
     setError(null);
-    console.log("Form data submitted:", data);
     AxiosInstance.put(`courses/${id}/`, {
       name: data.name,
       code: data.code,
@@ -59,7 +56,6 @@ const EditCourse = () => {
       credits: data.credits,
     })
       .then((res) => {
-        console.log("Course edited successfully:", res.data);
         setShowSuccess(true);
       })
       .catch((err) => {
@@ -70,7 +66,9 @@ const EditCourse = () => {
         if (errorData) {
           // Get the first error message from any field
           const firstErrorField = Object.values(errorData)[0];
-          errorMessage = Array.isArray(firstErrorField) ? firstErrorField[0] : "Unexpected error occurred.";
+          errorMessage = Array.isArray(firstErrorField)
+            ? firstErrorField[0]
+            : "Unexpected error occurred.";
         } else {
           errorMessage = "Unexpected error occurred while editing the course.";
         }

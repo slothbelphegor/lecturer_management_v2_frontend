@@ -8,7 +8,6 @@ import {
 import { useParams } from "react-router-dom";
 
 import EditIcon from "@mui/icons-material/Edit";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddBoxIcon from "@mui/icons-material/AddBox";
@@ -99,7 +98,6 @@ const ListEvaluation = () => {
       try {
         const response = await AxiosInstance.get(url);
         const json = response.data;
-        console.log(json);
         // Handle paginated response from DRF
         if (json.results && json.count !== undefined) {
           setEvaluations(json.results);

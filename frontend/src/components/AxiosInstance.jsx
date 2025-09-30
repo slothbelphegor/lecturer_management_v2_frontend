@@ -44,7 +44,6 @@ AxiosInstance.interceptors.request.use(
         const token = localStorage.getItem('Token')
         // Check if the token is expired or not
         if (isTokenExpired(token)) {
-            console.log("Token expired:", token);
             try {
                 const refreshToken = localStorage.getItem('RefreshToken');
                 if (!refreshToken) {
@@ -56,7 +55,6 @@ AxiosInstance.interceptors.request.use(
                 });
 
                 localStorage.setItem('Token', response.data.access);
-                console.log("Token refreshed successfully:", response.data.access);
                 config.headers.Authorization = `Bearer ${response.data.access}`;
             } catch (error) {
                 // If refresh fails, clear tokens and redirect to login

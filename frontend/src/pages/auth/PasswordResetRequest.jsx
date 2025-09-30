@@ -18,12 +18,10 @@ export default function PasswordResetRequest() {
   const submission = (data) => {
     setIsSubmitting(true);
     setError(null);
-    console.log("Form data submitted:", data);
     AxiosInstance.post("api/password_reset/", {
       email: data.email,
     })
       .then((res) => {
-        console.log("Password reset request sent successfully:", res.data);
         setShowSuccess(true);
       })
       .catch((err) => {

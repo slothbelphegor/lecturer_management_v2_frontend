@@ -73,7 +73,6 @@ const ListCourse = () => {
       try {
         const response = await AxiosInstance.get(url);
         const json = response.data;
-        console.log(json);
         // Handle paginated response from DRF
         if (json.results && json.count !== undefined) {
           setDocuments(json.results);
@@ -142,25 +141,25 @@ const ListCourse = () => {
     ),
     enableRowActions: true,
     positionActionsColumn: "last",
-    renderRowActions: ({ row }) => 
+    renderRowActions: ({ row }) =>
       role === "education_department" && (
-      <Box sx={{ display: "flex", flexWrap: "nowrap", gap: "8px" }}>
-        <IconButton
-          color="primary"
-          component={Link}
-          to={`/courses/edit/${row.original.id}`}
-        >
-          <EditIcon />
-        </IconButton>
-        <IconButton
-          color="error"
-          component={Link}
-          to={`/courses/delete/${row.original.id}`}
-        >
-          <DeleteIcon />
-        </IconButton>
-      </Box>
-    ),
+        <Box sx={{ display: "flex", flexWrap: "nowrap", gap: "8px" }}>
+          <IconButton
+            color="primary"
+            component={Link}
+            to={`/courses/edit/${row.original.id}`}
+          >
+            <EditIcon />
+          </IconButton>
+          <IconButton
+            color="error"
+            component={Link}
+            to={`/courses/delete/${row.original.id}`}
+          >
+            <DeleteIcon />
+          </IconButton>
+        </Box>
+      ),
     state: {
       columnFilters,
       globalFilter,

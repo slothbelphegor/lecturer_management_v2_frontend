@@ -3,7 +3,7 @@ import { Box, Typography, Snackbar, Alert } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { format } from "date-fns";
 
-import RecommendIcon from '@mui/icons-material/Recommend';
+import RecommendIcon from "@mui/icons-material/Recommend";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import CircularProgress from "@mui/material/CircularProgress";
 import RecommendationForm from "../../components/forms/full_forms/RecommendationForm";
@@ -20,7 +20,7 @@ const EditRecommendation = () => {
 
   const handleCloseError = () => {
     setError(null);
-  }
+  };
   const handleCloseSuccess = () => {
     setShowSuccess(false);
     window.history.back();
@@ -46,20 +46,18 @@ const EditRecommendation = () => {
   const submission = (data) => {
     setIsSubmitting(true);
     setError(null);
-    console.log("Form data submitted:", data);
     AxiosInstance.put(`recommendations/${id}/`, {
-        name: data.name,
-        date: data.date,
-        email: data.email,
-        phone_number: data.phone_number,
-        content: data.content,
-        workplace: data.workplace,
-        recommender: currentRecommendation.recommender,
-        status: data.status,
-        courses: data.courses,
+      name: data.name,
+      date: data.date,
+      email: data.email,
+      phone_number: data.phone_number,
+      content: data.content,
+      workplace: data.workplace,
+      recommender: currentRecommendation.recommender,
+      status: data.status,
+      courses: data.courses,
     })
       .then((res) => {
-        console.log("Recommendation edited successfully:", res.data);
         setShowSuccess(true);
       })
       .catch((err) => {
@@ -71,7 +69,9 @@ const EditRecommendation = () => {
         if (errorData) {
           // Get the first error message from any field
           const firstErrorField = Object.values(errorData)[0];
-          errorMessage = Array.isArray(firstErrorField) ? firstErrorField[0] : "Unexpected error occurred.";
+          errorMessage = Array.isArray(firstErrorField)
+            ? firstErrorField[0]
+            : "Unexpected error occurred.";
         } else {
           errorMessage = "Unexpected error occurred while editing.";
         }

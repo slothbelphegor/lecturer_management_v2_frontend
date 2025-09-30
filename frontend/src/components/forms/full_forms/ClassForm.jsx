@@ -49,12 +49,10 @@ export default function ClassForm({ classObj, submission, isSubmitting }) {
     try {
       const courseResponse = await AxiosInstance.get("courses/all_courses/");
       setCourses(courseResponse.data);
-      console.log(courseResponse.data)
       const lecturersResponse = await AxiosInstance.get(
         "lecturers/all_lecturers/"
       );
       setLecturers(lecturersResponse.data);
-      console.log(lecturersResponse.data)
     } catch (error) {
       console.error("Error fetching data:", error);
       setError("Error fetching data.");

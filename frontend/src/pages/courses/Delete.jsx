@@ -19,7 +19,7 @@ export default function DeleteCourse() {
   const handleCloseError = () => {
     setError(null);
     window.location.reload();
-  }
+  };
   const handleCloseSuccess = () => {
     setShowSuccess(false);
     window.location.href = "/courses";
@@ -46,8 +46,6 @@ export default function DeleteCourse() {
 
   const deleteRecord = (event) => {
     event.preventDefault();
-    console.log(currentCourse);
-    
 
     setIsLoading(true);
     AxiosInstance.delete(`courses/${id}/`)

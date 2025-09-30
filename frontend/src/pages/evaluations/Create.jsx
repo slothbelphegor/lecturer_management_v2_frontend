@@ -20,7 +20,7 @@ const CreateEvaluation = () => {
   const handleCloseError = () => {
     setError(null);
     window.location.reload();
-  }
+  };
   const handleCloseSuccess = () => {
     setShowSuccess(false);
     window.location.href = `/lecturers/${id}/evaluations`;
@@ -46,16 +46,14 @@ const CreateEvaluation = () => {
   const submission = (data) => {
     setIsSubmitting(true);
     setError(null);
-    console.log("Form data submitted:", data);
     AxiosInstance.post(`evaluations/`, {
-        title: data.title,
-        date: format(new Date(data.date), 'yyyy-MM-dd'),
-        type: data.type,
-        content: data.content,
-        lecturer: currentLecturer.id
+      title: data.title,
+      date: format(new Date(data.date), "yyyy-MM-dd"),
+      type: data.type,
+      content: data.content,
+      lecturer: currentLecturer.id,
     })
       .then((res) => {
-        console.log("Evaluation created successfully:", res.data);
         setShowSuccess(true);
       })
       .catch((err) => {
@@ -67,7 +65,9 @@ const CreateEvaluation = () => {
         if (errorData) {
           // Get the first error message from any field
           const firstErrorField = Object.values(errorData)[0];
-          errorMessage = Array.isArray(firstErrorField) ? firstErrorField[0] : "Unexpected error occurred.";
+          errorMessage = Array.isArray(firstErrorField)
+            ? firstErrorField[0]
+            : "Unexpected error occurred.";
         } else {
           errorMessage = "Unexpected error occurred while creating.";
         }
@@ -106,10 +106,7 @@ const CreateEvaluation = () => {
           </Typography>
         </Box>
       </Box>
-      <EvaluationForm
-        submission={submission}
-        isSubmitting={isSubmitting}
-      />
+      <EvaluationForm submission={submission} isSubmitting={isSubmitting} />
 
       {/* Error Snackbar */}
       <Snackbar

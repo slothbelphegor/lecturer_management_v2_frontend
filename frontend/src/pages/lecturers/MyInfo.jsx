@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import { format } from "date-fns";
 import { useParams, useNavigate } from "react-router-dom";
-import InfoIcon from '@mui/icons-material/Info';
+import InfoIcon from "@mui/icons-material/Info";
 
 import AxiosInstance from "../../components/AxiosInstance";
 import getUserRole from "../../components/GetUserRole";
@@ -40,7 +40,6 @@ const MyInfo = () => {
     try {
       const response = await AxiosInstance.get(`lecturers/me/`);
       setCurrentLecturer(response.data);
-      console.log("Current lecturer data:", response.data);
     } catch (error) {
       if (
         currentRole == "potential_lecturer" &&
@@ -59,7 +58,6 @@ const MyInfo = () => {
       try {
         const userResponse = await AxiosInstance.get(`users/me/`);
         setCurrentUser(userResponse.data);
-        console.log("Current user data:", userResponse.data);
       } catch (error) {
         setError("Error fetching user details.");
         console.error("Error fetching user details:", error);
@@ -69,7 +67,6 @@ const MyInfo = () => {
     try {
       const lecturersResponse = await AxiosInstance.get(`lecturers/`);
       setLecturers(lecturersResponse.data);
-      console.log("All lecturers data:", lecturersResponse.data);
     } catch (error) {
       setError("Error fetching lecturers list.");
       console.error("Error fetching lecturers list:", error);
@@ -85,7 +82,6 @@ const MyInfo = () => {
   const submission = (data) => {
     setIsSubmitting(true);
     setError(null);
-    console.log("Form data submitted:", data);
     const academics = {
       CN: {
         school_name: data.school_name_CN,
@@ -179,7 +175,6 @@ const MyInfo = () => {
       status: data.status,
       user: currentLecturer.user,
     };
-    console.log("Data to be sent:", sentData);
     if (currentRole == "potential_lecturer" && !currentLecturer.user) {
       sentData["status"] = "Chưa duyệt hồ sơ";
       AxiosInstance.post(`lecturers/me/`, sentData)

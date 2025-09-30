@@ -54,7 +54,6 @@ const MySchedules = () => {
   const handleOpen = (info) => {
     setOpen(true);
     setSelectedDate(info?.dateStr);
-    console.log(info?.dateStr);
   };
   const handleClose = () => setOpen(false);
 
@@ -85,10 +84,7 @@ const MySchedules = () => {
   const getData = async () => {
     setIsLoading(true);
     try {
-
-      const schedulesResponse = await AxiosInstance.get(
-        `schedules/me`
-      );
+      const schedulesResponse = await AxiosInstance.get(`schedules/me`);
       setSchedules(
         Array.isArray(schedulesResponse.data) ? schedulesResponse.data : []
       );
@@ -158,7 +154,6 @@ const MySchedules = () => {
       }))
     : [];
 
-
   const scheduleClickAction = (info) => {
     handleOpen(info);
     setModalTitle("Schedule Details");
@@ -176,17 +171,13 @@ const MySchedules = () => {
         readOnly={true}
       />
     );
-    console.log(info);
   };
 
   const selectTimeAction = (info) => {
     handleOpen(info);
     setModalTitle("New Schedule");
-    console.log(info);
     const formattedStartTime = format(new Date(info.start), "HH:mm");
     const formattedEndTime = format(new Date(info.end), "HH:mm");
-    console.log("Formatted Start Time:", formattedStartTime);
-    console.log("Formatted End Time:", formattedEndTime);
     setModalContent(
       <ScheduleInfoForm
         courses={courses}
@@ -249,7 +240,6 @@ const MySchedules = () => {
             value={selectedCourses}
             onChange={(e) => {
               setSelectedCourses(e.target.value);
-              console.log("Selected: ", e.target.value);
             }}
           />
         </Box>
@@ -300,7 +290,6 @@ const MySchedules = () => {
             }
           }}
           eventClick={scheduleClickAction}
-        
           slotDuration="00:15:00"
           snapDuration="00:15:00"
           slotLabelInterval="01:00"
@@ -311,7 +300,6 @@ const MySchedules = () => {
           }}
         />
       </Box>
-      
     </div>
   );
 };

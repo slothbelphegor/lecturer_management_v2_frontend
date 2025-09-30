@@ -1,14 +1,18 @@
 import { useState, useEffect } from "react";
-import { Box, Typography, Snackbar, Alert, CircularProgress } from "@mui/material";
+import {
+  Box,
+  Typography,
+  Snackbar,
+  Alert,
+  CircularProgress,
+} from "@mui/material";
 import { format } from "date-fns";
-import { useParams, useNavigate } from "react-router-dom";
-import AddBoxIcon from "@mui/icons-material/AddBox";
-import InfoIcon from '@mui/icons-material/Info';
+import { useParams } from "react-router-dom";
+import InfoIcon from "@mui/icons-material/Info";
 
 import AxiosInstance from "../../components/AxiosInstance";
 import LecturerInfoForm from "../../components/forms/full_forms/LecturerForm";
 import getUserRole from "../../components/GetUserRole";
-
 
 const EditLecturer = () => {
   const role = getUserRole();
@@ -31,14 +35,11 @@ const EditLecturer = () => {
     try {
       const response = await AxiosInstance.get(`lecturers/${lecturer_id}/`);
       setCurrentLecturer(response.data);
-      console.log("Current lecturer data:", response.data);
-    }
-    catch (error) {
+    } catch (error) {
       setError("Error fetching lecturer details.");
-    }
-    finally {
+    } finally {
       setIsLoading(false);
-    };
+    }
   };
 
   useEffect(() => {
@@ -48,7 +49,6 @@ const EditLecturer = () => {
   const submission = (data) => {
     setIsSubmitting(true);
     setError(null);
-    console.log("Form data submitted:", data);
     const academics = {
       CN: {
         school_name: data.school_name_CN,
@@ -109,21 +109,27 @@ const EditLecturer = () => {
       email: data.email,
       phone_number: data.phone,
       gender: data.gender,
-      dob: format(new Date(data.dob), 'yyyy-MM-dd'),
+      dob: format(new Date(data.dob), "yyyy-MM-dd"),
       ethnic: data.ethnic,
       religion: data.religion,
       hometown: data.hometown,
       degree: data.degree,
       title: data.title,
       title_detail: data.title_detail,
-      title_granted_at: format(new Date(data.title_granted_at), 'yyyy-MM-dd'),
+      title_granted_at: format(new Date(data.title_granted_at), "yyyy-MM-dd"),
       address: data.address,
       work_position: data.work_position,
       workplace: data.workplace,
-      quota_code: data.quota_code === "Khác (nhập cụ thể)" ? data.other_quota_code : data.quota_code,
+      quota_code:
+        data.quota_code === "Khác (nhập cụ thể)"
+          ? data.other_quota_code
+          : data.quota_code,
       salary_coefficient: data.salary_coefficient,
-      salary_coefficient_granted_at: format(new Date(data.salary_coefficient_granted_at), 'yyyy-MM-dd'),
-      recruited_at: format(new Date(data.recruited_at), 'yyyy-MM-dd'),
+      salary_coefficient_granted_at: format(
+        new Date(data.salary_coefficient_granted_at),
+        "yyyy-MM-dd"
+      ),
+      recruited_at: format(new Date(data.recruited_at), "yyyy-MM-dd"),
       years_of_experience: data.years_of_experience,
       exp_language: data.exp_language,
       exp_computer: data.exp_computer,
@@ -134,9 +140,8 @@ const EditLecturer = () => {
       courses: data.courses,
       recommender: data.recommender,
       status: data.status,
-      user: null
-    }
-    console.log("Data to be sent:", sentData);
+      user: null,
+    };
     AxiosInstance.put(`lecturers/${lecturer_id}/`, sentData)
       .then((res) => {
         setShowSuccess(true);
@@ -166,12 +171,12 @@ const EditLecturer = () => {
   };
 
   if (isLoading) {
-      return (
-        <Box sx={{ textAlign: "center", marginTop: "20px" }}>
-          <CircularProgress />
-        </Box>
-      );
-    }
+    return (
+      <Box sx={{ textAlign: "center", marginTop: "20px" }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   return (
     <>
@@ -192,13 +197,14 @@ const EditLecturer = () => {
           </Typography>
         </Box>
       </Box>
-      <LecturerInfoForm 
-        readOnly={!(role == "education_department")} 
+      <LecturerInfoForm
+        readOnly={!(role == "education_department")}
         isSelfLecturer={!(role == "education_department")}
-        submission={submission} 
+        submission={submission}
         lecturer={currentLecturer}
         isEdit={true}
-        isSubmitting={isSubmitting}/>
+        isSubmitting={isSubmitting}
+      />
       {/* Error Snackbar */}
       <Snackbar
         open={!!error}

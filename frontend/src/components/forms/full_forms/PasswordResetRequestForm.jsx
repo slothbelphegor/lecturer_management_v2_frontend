@@ -9,7 +9,7 @@ import MyTextField from "../MyTextField";
 import MyPasswordField from "../MyPasswordField";
 import MyButton from "../MyButton";
 
-const UserEmailForm = ({submission, isSubmitting}) => {
+const UserEmailForm = ({ submission, isSubmitting }) => {
   const schema = yup.object().shape({
     email: yup
       .string()
@@ -24,11 +24,13 @@ const UserEmailForm = ({submission, isSubmitting}) => {
   return (
     <div className={"myBackground"}>
       <form onSubmit={handleSubmit(submission)}>
-        <Box className={"whiteBox"}
+        <Box
+          className={"whiteBox"}
           sx={{
             opacity: isSubmitting ? 0.7 : 1,
             pointerEvents: isSubmitting ? "none" : "auto",
-          }}>
+          }}
+        >
           <Box className={"itemBox"}>
             <Box className={"title"}>Request Password Reset</Box>
           </Box>
@@ -36,11 +38,11 @@ const UserEmailForm = ({submission, isSubmitting}) => {
             <MyTextField label={"Email"} name={"email"} control={control} />
           </Box>
           <Box className={"itemBox"}>
-            <MyButton 
-              label={isSubmitting ? "Sending..." :"Send Reset Link"} 
+            <MyButton
+              label={isSubmitting ? "Sending..." : "Send Reset Link"}
               disabled={isSubmitting}
               startIcon={isSubmitting ? <CircularProgress size={20} /> : null}
-              type={"submit"} 
+              type={"submit"}
             />
           </Box>
         </Box>

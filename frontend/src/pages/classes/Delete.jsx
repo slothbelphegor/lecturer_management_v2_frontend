@@ -37,7 +37,6 @@ export default function DeleteClass() {
 
   const deleteRecord = (event) => {
     event.preventDefault();
-    console.log(currentClass)
     setIsLoading(true);
     AxiosInstance.delete(`classes/${id}/`)
       .then(() => {

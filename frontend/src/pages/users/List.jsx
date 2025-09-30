@@ -1,36 +1,32 @@
-import { React, useMemo, useState, useEffect } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import AxiosInstance from "../../components/AxiosInstance";
 
-import { Box, Chip, IconButton, Typography } from "@mui/material";
+import { Box, IconButton, Typography } from "@mui/material";
 import CalendarViewMonthIcon from "@mui/icons-material/CalendarViewMonth";
-import InfoIcon from '@mui/icons-material/Info';
+import InfoIcon from "@mui/icons-material/Info";
 import DeleteIcon from "@mui/icons-material/Delete";
-import AddBoxIcon from '@mui/icons-material/AddBox';
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import AddBoxIcon from "@mui/icons-material/AddBox";
 import MyButton from "../../components/forms/MyButton";
 import { MaterialReactTable } from "material-react-table";
 
 const ListUser = () => {
   const [users, setUsers] = useState([]);
-  const [lecturers, setLecturers] = useState([])
-  const [groups, setGroups] = useState([])
+  const [groups, setGroups] = useState([]);
   // Su dung Axios lay du lieu tu backend
   const getData = () => {
     AxiosInstance.get("users/").then((res) => {
       setUsers(res.data);
     });
     AxiosInstance.get("groups/").then((res) => {
-      setGroups(res.data)
-      console.log(res.data)
-    })
-    
+      setGroups(res.data);
+    });
   };
   // Lay du lieu ngay khi tai trang
   useEffect(() => {
     getData();
-  }, []); 
+  }, []);
   // Khai bao cac cot của bang
   const columns = useMemo(
     () => [
@@ -49,21 +45,19 @@ const ListUser = () => {
           const groupIds = cell.getValue();
           if (!groupIds || !Array.isArray(groupIds)) return "—";
           const groupNames = groupIds
-            .map(id => groups.find(g => g.id === id)?.name)
+            .map((id) => groups.find((g) => g.id === id)?.name)
             .filter(Boolean);
           return groupNames.length ? groupNames.join(", ") : "—";
-        }
+        },
       },
       {
-      accessorKey: "lecturer_str",
-      header: "Thuộc về giảng viên",
-      Cell: ({ cell }) => cell.getValue() || "—",
-    }
+        accessorKey: "lecturer_str",
+        header: "Thuộc về giảng viên",
+        Cell: ({ cell }) => cell.getValue() || "—",
+      },
     ],
     [groups]
   );
-
-  
 
   return (
     <div>
@@ -86,7 +80,7 @@ const ListUser = () => {
         <Box>
           <MyButton
             type="button"
-            startIcon={<AddBoxIcon/>}
+            startIcon={<AddBoxIcon />}
             label="Add New Account"
             onClick={() => {
               window.location.href = `/users/create`;
@@ -133,13 +127,15 @@ const ListUser = () => {
               <strong>Email:</strong> {row.original.email}
             </Typography>
             <Typography variant="body1">
-              <strong>Loại tài khoản:</strong> {groups.find((group) => group.id == row.original.groups)?.name}
+              <strong>Loại tài khoản:</strong>{" "}
+              {groups.find((group) => group.id == row.original.groups)?.name}
             </Typography>
-            {row.original.lecturer_str && 
-            <Typography variant="body1">
-              <strong>Thuộc về giảng viên:</strong> {row.original.lecturer_str}
-            </Typography>}
-            
+            {row.original.lecturer_str && (
+              <Typography variant="body1">
+                <strong>Thuộc về giảng viên:</strong>{" "}
+                {row.original.lecturer_str}
+              </Typography>
+            )}
           </Box>
         )}
       />

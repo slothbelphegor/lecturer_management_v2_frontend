@@ -87,7 +87,6 @@ const ListDocument = () => {
       try {
         const response = await AxiosInstance.get(url);
         const json = response.data;
-        console.log(url);
         // Handle paginated response from DRF
         if (json.results && json.count !== undefined) {
           setDocuments(json.results);

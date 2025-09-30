@@ -26,7 +26,6 @@ export default function ScheduleInfoForm({
   deleteSubmission,
   readOnly,
 }) {
-  console.log(courses);
   const courseOptions = courses.map((course) => ({
     id: course.name,
     value: course.name,
@@ -44,7 +43,6 @@ export default function ScheduleInfoForm({
     }
     if (place) formValues.place = place;
     if (notes) formValues.notes = notes;
-    console.log("Setting form values:", formValues);
     reset(formValues);
   }, [startTime, endTime, fromDate, courseId, place, notes, courses]);
 

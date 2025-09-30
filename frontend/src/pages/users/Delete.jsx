@@ -20,7 +20,7 @@ export default function DeleteUser() {
     if (!currentUser.id) {
       setIsLoading(true);
     }
-    
+
     try {
       const response = await AxiosInstance.get(`/users/${id}`);
       setCurrentUser(response.data);
@@ -37,7 +37,6 @@ export default function DeleteUser() {
 
   const deleteRecord = (event) => {
     event.preventDefault();
-    console.log(currentUser)
     setIsLoading(true);
     AxiosInstance.delete(`users/${id}/`)
       .then(() => {
@@ -65,7 +64,11 @@ export default function DeleteUser() {
   }
 
   if (isLoading) {
-    return <Box sx={{ textAlign: "center", marginTop: "20px" }}><CircularProgress /></Box>;
+    return (
+      <Box sx={{ textAlign: "center", marginTop: "20px" }}>
+        <CircularProgress />
+      </Box>
+    );
   }
 
   return (
@@ -80,7 +83,11 @@ export default function DeleteUser() {
         </Typography>
       </Box>
       <form onSubmit={deleteRecord}>
-        <Box className="formBox" sx={{display: "flex", flexDirection: "column"}} onSubmit={deleteRecord}>
+        <Box
+          className="formBox"
+          sx={{ display: "flex", flexDirection: "column" }}
+          onSubmit={deleteRecord}
+        >
           <Box className="formArea">
             <Typography>
               You will delete user <strong>{currentUser.username}</strong>.

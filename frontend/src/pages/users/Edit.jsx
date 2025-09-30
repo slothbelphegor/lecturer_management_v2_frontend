@@ -90,7 +90,6 @@ const EditUser = () => {
         })) || [],
     [lecturers, currentUser]
   );
-  console.log(lecturerOptions);
   const groupOptions = useMemo(
     () =>
       groups?.map((group) => ({
@@ -137,7 +136,6 @@ const EditUser = () => {
   const submission = (data) => {
     setIsSubmitting(true);
     setError(null);
-    console.log("Form data submitted:", data);
     AxiosInstance.patch(`users/${user_id}/`, {
       username: data.username,
       email: data.email,
@@ -145,7 +143,6 @@ const EditUser = () => {
       groups: [selectedGroup],
     })
       .then((res) => {
-        console.log("Response data: ", res.data);
         setShowSuccess(true);
       })
       .catch((err) => {
@@ -179,7 +176,7 @@ const EditUser = () => {
           sx={{ marginLeft: "15px", fontWeight: "bold" }}
           variant="subtitle2"
         >
-          Thông tin tài khoản
+          Account Information
         </Typography>
       </Box>
       <form

@@ -5,6 +5,7 @@ import "./App.css";
 import Home from "./pages/Home.jsx";
 import ListLecturers from "./pages/lecturers/List.jsx";
 import Navbar from "./components/navbar/Navbar.jsx";
+import AllowedRoute from "./components/AllowedRoute.jsx"
 
 import ListDocument from "./pages/documents/List.jsx";
 import CreateDocument from "./pages/documents/Create.jsx";
@@ -63,85 +64,136 @@ function App() {
             <Route element={<ProtectedRoute />}>
               <Route path="/" element={<Home />} />
               <Route path="/lecturers" element={<ListLecturers />} />
-              <Route path="/lecturers/delete/:id" element={<DeleteLecturer />} />
+              <Route
+                element={
+                  <AllowedRoute allowedRoles={["education_department"]} />
+                }
+              >
+                <Route path="/lecturers/create" element={<CreateLecturer />} />
+                <Route path="/lecturers/edit/:id" element={<EditLecturer />} />
+                <Route
+                  path="/lecturers/delete/:id"
+                  element={<DeleteLecturer />}
+                />
+              </Route>
+              <Route
+                element={
+                  <AllowedRoute
+                    allowedRoles={["it_faculty", "education_department"]}
+                  />
+                }
+              >
+                <Route
+                  path="/lecturers/check/:id"
+                  element={<CheckLecturer />}
+                />
+                <Route
+                  path="/lecturers/registrations"
+                  element={<ListPotentialLecturer />}
+                />
+              </Route>
+
               <Route
                 path="/lecturers/:id/schedules"
                 element={<ListSchedule />}
               />
               <Route
+                element={
+                  <AllowedRoute
+                    allowedRoles={["lecturer", "potential_lecturer"]}
+                  />
+                }
+              >
+                <Route path="/my_info" element={<MyInfo />} />
+                <Route path="/my_evaluations" element={<MyEvaluations />} />
+                <Route path="/my_schedules" element={<MySchedules />} />
+                <Route
+                  path="/my_recommendations"
+                  element={<MyRecommendations />}
+                />
+                <Route
+                  path="/my_recommendations/create"
+                  element={<CreateRecommendation />}
+                />
+                <Route
+                  path="/my_recommendations/edit/:id"
+                  element={<EditRecommendation />}
+                />
+                <Route
+                  path="/my_recommendations/delete/:id"
+                  element={<DeleteRecommendation />}
+                />
+              </Route>
+
+              <Route path="/my_account" element={<MyAccount />} />
+
+              <Route
                 path="/lecturers/:id/evaluations"
                 element={<ListEvaluation />}
               />
-              <Route path="/my_info" element={<MyInfo />} />
-              <Route path="/my_evaluations" element={<MyEvaluations />} />
-              <Route path="/my_schedules" element={<MySchedules />} />
-              <Route path="/my_account" element={<MyAccount />} />
-              <Route
-                path="/my_recommendations"
-                element={<MyRecommendations />}
-              />
-              <Route
-                path="/my_recommendations/create"
-                element={<CreateRecommendation />}
-              />
-              <Route
-                path="/my_recommendations/edit/:id"
-                element={<EditRecommendation />}
-              />
-              <Route
-                path="/my_recommendations/delete/:id"
-                element={<DeleteRecommendation />}
-              />
-
-              <Route path="/lecturers/create" element={<CreateLecturer />} />
-              <Route path="/lecturers/edit/:id" element={<EditLecturer />} />
 
               <Route
-                path="/lecturers/:id/evaluations/edit/:id"
-                element={<EditEvaluation />}
-              />
-              <Route
-                path="/lecturers/:id/evaluations/delete/:id"
-                element={<DeleteEvaluation />}
-              />
-              <Route
-                path="/lecturers/:id/evaluations/create"
-                element={<CreateEvaluation />}
-              />
+                element={
+                  <AllowedRoute
+                    allowedRoles={["it_faculty", "supervision_department"]}
+                  />
+                }
+              >
+                <Route
+                  path="/lecturers/:id/evaluations/edit/:id"
+                  element={<EditEvaluation />}
+                />
+                <Route
+                  path="/lecturers/:id/evaluations/delete/:id"
+                  element={<DeleteEvaluation />}
+                />
+                <Route
+                  path="/lecturers/:id/evaluations/create"
+                  element={<CreateEvaluation />}
+                />
+              </Route>
+
               <Route path="/documents" element={<ListDocument />} />
-
-              <Route path="/documents/create" element={<CreateDocument />} />
               <Route
-                path="/documents/delete/:id"
-                element={<DeleteDocument />}
-              />
-              <Route path="/documents/edit/:id" element={<EditDocument />} />
+                element={
+                  <AllowedRoute
+                    allowedRoles={["education_department", "it_faculty"]}
+                  />
+                }
+              >
+                <Route path="/documents/create" element={<CreateDocument />} />
+                <Route
+                  path="/documents/delete/:id"
+                  element={<DeleteDocument />}
+                />
+                <Route path="/courses/create" element={<CreateCourse />} />
+                <Route path="/courses/edit/:id" element={<EditCourse />} />
+                <Route path="/courses/delete/:id" element={<DeleteCourse />} />
+                <Route path="/documents/edit/:id" element={<EditDocument />} />
+                <Route
+                  path="/lecturers/recommendations"
+                  element={<ListRecommendation />}
+                />
+                <Route
+                  path="/lecturers/recommendations/edit/:id"
+                  element={<EditRecommendation />}
+                />
+                <Route
+                  path="/lecturers/recommendations/delete/:id"
+                  element={<DeleteRecommendation />}
+                />
+              </Route>
+
               <Route path="/courses" element={<ListCourse />} />
-              <Route path="/courses/create" element={<CreateCourse />} />
-              <Route path="/courses/edit/:id" element={<EditCourse />} />
-              <Route path="/courses/delete/:id" element={<DeleteCourse />} />
             </Route>
-            <Route path="/users" element={<ListUser />} />
-            <Route path="/users/create" element={<CreateUser />} />
-            <Route path="/users/edit/:id" element={<EditUser />} />
-            <Route path="/users/delete/:id" element={<DeleteUser />} />
             <Route
-              path="/lecturers/recommendations"
-              element={<ListRecommendation />}
-            />
-            <Route
-              path="/lecturers/recommendations/edit/:id"
-              element={<EditRecommendation />}
-            />
-            <Route
-              path="/lecturers/recommendations/delete/:id"
-              element={<DeleteRecommendation />}
-            />
-            <Route
-              path="/lecturers/registrations"
-              element={<ListPotentialLecturer />}
-            />
-            <Route path="/lecturers/check/:id" element={<CheckLecturer />} />
+              element={<AllowedRoute allowedRoles={["education_department"]} />}
+            >
+              <Route path="/users" element={<ListUser />} />
+              <Route path="/users/create" element={<CreateUser />} />
+              <Route path="/users/edit/:id" element={<EditUser />} />
+              <Route path="/users/delete/:id" element={<DeleteUser />} />
+            </Route>
           </Routes>
         }
       />

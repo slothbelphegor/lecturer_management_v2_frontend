@@ -10,9 +10,7 @@ import MyButton from "../MyButton";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
-const Login = ({submission, isSubmitting}) => {
-
-
+const Login = ({ submission, isSubmitting }) => {
   const schema = yup.object().shape({
     username_or_email: yup.string().required("Username or email is required"),
     password: yup.string().required("Password is required"),
@@ -44,14 +42,17 @@ const Login = ({submission, isSubmitting}) => {
             />
           </Box>
           <Box className={"itemBox"}>
-            <MyButton 
-              label={isSubmitting ? "Login..." :"Login"} 
-              type={"submit"} 
+            <MyButton
+              label={isSubmitting ? "Login..." : "Login"}
+              type={"submit"}
               disabled={isSubmitting}
-              startIcon={isSubmitting  ? <CircularProgress size={20} /> : null}/>
+              startIcon={isSubmitting ? <CircularProgress size={20} /> : null}
+            />
           </Box>
           <Box className={"itemBox"} sx={{ flexDirection: "column" }}>
-            <Link to={"/register"}>Here for applying as a lecturer? Register here</Link>
+            <Link to={"/register"}>
+              Here for applying as a lecturer? Register here
+            </Link>
             <Link to={"/request_password_reset"}>Forget Password?</Link>
           </Box>
         </Box>

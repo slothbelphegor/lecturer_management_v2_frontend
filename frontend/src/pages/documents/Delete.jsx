@@ -20,7 +20,7 @@ export default function DeleteDocument() {
     if (!currentDocument.id) {
       setIsLoading(true);
     }
-    
+
     try {
       const response = await AxiosInstance.get(`/documents/${id}`);
       setCurrentDocument(response.data);
@@ -37,7 +37,6 @@ export default function DeleteDocument() {
 
   const deleteRecord = (event) => {
     event.preventDefault();
-    console.log(currentDocument)
     setIsLoading(true);
     AxiosInstance.delete(`documents/${id}/`)
       .then(() => {
@@ -65,7 +64,11 @@ export default function DeleteDocument() {
   }
 
   if (isLoading) {
-    return <Box sx={{ textAlign: "center", marginTop: "20px" }}><CircularProgress /></Box>;
+    return (
+      <Box sx={{ textAlign: "center", marginTop: "20px" }}>
+        <CircularProgress />
+      </Box>
+    );
   }
 
   return (
@@ -80,10 +83,14 @@ export default function DeleteDocument() {
         </Typography>
       </Box>
       <form onSubmit={deleteRecord}>
-        <Box className="formBox" sx={{display: "flex", flexDirection: "column"}} onSubmit={deleteRecord}>
+        <Box
+          className="formBox"
+          sx={{ display: "flex", flexDirection: "column" }}
+          onSubmit={deleteRecord}
+        >
           <Box className="formArea">
             <Typography>
-              You will delete <strong>{currentDocument.name}.</strong>{" "} of type{" "}
+              You will delete <strong>{currentDocument.name}.</strong> of type{" "}
               <strong>{currentDocument.document_type_name}</strong>.
             </Typography>
           </Box>

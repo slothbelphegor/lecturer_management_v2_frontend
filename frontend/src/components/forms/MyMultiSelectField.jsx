@@ -56,9 +56,6 @@ export default function MyMultiSelectField(props) {
                 // console.log("options:", options);
                 return (
                   <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                    {/* {selected.map((option) => (
-                      <Chip key={option.id} label={option.name} />
-                    ))} */}
                     {selected.map((id) => {
                       const option = options.find((opt) => opt.id === id);
                       return <Chip key={id} label={option?.name ?? "undefined"} />;

@@ -19,7 +19,7 @@ const CreateRecommendation = () => {
 
   const handleCloseError = () => {
     setError(null);
-  }
+  };
   const handleCloseSuccess = () => {
     setShowSuccess(false);
     window.location.href = "/my_recommendations";
@@ -45,24 +45,25 @@ const CreateRecommendation = () => {
   const submission = (data) => {
     setIsSubmitting(true);
     setError(null);
-    console.log("Form data submitted:", data);
     AxiosInstance.post(`recommendations/me/`, {
-        name: data.name,
-        date: format(new Date(), 'yyyy-MM-dd'),
-        email: data.email,
-        phone_number: data.phone_number,
-        content: data.content,
-        workplace: data.workplace,
-        recommender: currentLecturer.id,
-        status: "Chưa được duyệt",
-        courses: data.courses,
+      name: data.name,
+      date: format(new Date(), "yyyy-MM-dd"),
+      email: data.email,
+      phone_number: data.phone_number,
+      content: data.content,
+      workplace: data.workplace,
+      recommender: currentLecturer.id,
+      status: "Chưa được duyệt",
+      courses: data.courses,
     })
       .then((res) => {
-        console.log("Recommendation created successfully:", res.data);
         setShowSuccess(true);
       })
       .catch((err) => {
-        console.error("Error creating recommendation:", err.response?.data || err);
+        console.error(
+          "Error creating recommendation:",
+          err.response?.data || err
+        );
 
         const errorData = err.response?.data;
         let errorMessage;
@@ -70,7 +71,9 @@ const CreateRecommendation = () => {
         if (errorData) {
           // Get the first error message from any field
           const firstErrorField = Object.values(errorData)[0];
-          errorMessage = Array.isArray(firstErrorField) ? firstErrorField[0] : "Unexpected error occurred.";
+          errorMessage = Array.isArray(firstErrorField)
+            ? firstErrorField[0]
+            : "Unexpected error occurred.";
         } else {
           errorMessage = "Unexpected error occurred while editing.";
         }
@@ -109,10 +112,7 @@ const CreateRecommendation = () => {
           </Typography>
         </Box>
       </Box>
-      <RecommendationForm
-        submission={submission}
-        isSubmitting={isSubmitting}
-      />
+      <RecommendationForm submission={submission} isSubmitting={isSubmitting} />
 
       {/* Error Snackbar */}
       <Snackbar

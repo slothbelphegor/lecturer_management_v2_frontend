@@ -9,25 +9,23 @@ import { useParams } from "react-router-dom";
 
 import EditIcon from "@mui/icons-material/Edit";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import DeleteIcon from "@mui/icons-material/Delete";
-import AddBoxIcon from '@mui/icons-material/AddBox';
-import BookIcon from '@mui/icons-material/Book';
+import AddBoxIcon from "@mui/icons-material/AddBox";
+import BookIcon from "@mui/icons-material/Book";
 import MyButton from "../../components/forms/MyButton";
-
 
 import getUserRole from "../../components/GetUserRole.jsx";
 import AxiosInstance from "../../components/AxiosInstance";
 
 const MyEvaluations = () => {
-
   const params = useParams();
   const lecturer_id = params.id;
   const role = getUserRole();
   //data and fetching state
   const [currentLecturer, setCurrentLecturer] = useState({});
   const [evaluations, setEvaluations] = useState([]);
- 
+
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isRefetching, setIsRefetching] = useState(false);
@@ -59,7 +57,6 @@ const MyEvaluations = () => {
         header: "Loại đánh giá",
         size: 40,
       },
-    
     ],
     []
   );
@@ -100,7 +97,6 @@ const MyEvaluations = () => {
       try {
         const response = await AxiosInstance.get(url);
         const json = response.data;
-        console.log(json)
         // Handle paginated response from DRF
         if (json.results && json.count !== undefined) {
           setEvaluations(json.results);
@@ -134,8 +130,7 @@ const MyEvaluations = () => {
     getRowId: (row) => row.id,
     initialState: {
       showColumnFilters: false,
-      columnVisibility: {
-      },
+      columnVisibility: {},
     },
     manualFiltering: true,
     manualPagination: true,
@@ -154,15 +149,13 @@ const MyEvaluations = () => {
     enableExpanding: true,
     renderDetailPanel: ({ row }) => (
       <Box sx={{ padding: 2 }}>
-            <Typography variant="h6" gutterBottom>
-              {row.original.title || "N/A"}
-            </Typography>
-            <Typography variant="body2">
-              {row.original.content || "N/A"}
-            </Typography>
-          </Box>
+        <Typography variant="h6" gutterBottom>
+          {row.original.title || "N/A"}
+        </Typography>
+        <Typography variant="body2">{row.original.content || "N/A"}</Typography>
+      </Box>
     ),
-    
+
     state: {
       columnFilters,
       globalFilter,
@@ -174,7 +167,7 @@ const MyEvaluations = () => {
       sorting,
     },
   });
-  
+
   return (
     <>
       <Box
@@ -193,7 +186,6 @@ const MyEvaluations = () => {
             Your Evaluations
           </Typography>
         </Box>
-        
       </Box>
       <MaterialReactTable table={table} />
     </>

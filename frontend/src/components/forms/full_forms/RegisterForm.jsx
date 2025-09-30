@@ -9,7 +9,7 @@ import MyTextField from "../MyTextField";
 import MyPasswordField from "../MyPasswordField";
 import MyButton from "../MyButton";
 
-const RegisterForm = ({submission, isSubmitting}) => {
+const RegisterForm = ({ submission, isSubmitting }) => {
   const schema = yup.object().shape({
     username: yup.string().required("Username is required"),
     email: yup
@@ -40,11 +40,13 @@ const RegisterForm = ({submission, isSubmitting}) => {
   return (
     <div className={"myBackground"}>
       <form onSubmit={handleSubmit(submission)}>
-        <Box className={"whiteBox"}
+        <Box
+          className={"whiteBox"}
           sx={{
             opacity: isSubmitting ? 0.7 : 1,
             pointerEvents: isSubmitting ? "none" : "auto",
-          }}>
+          }}
+        >
           <Box className={"itemBox"}>
             <Box className={"title"}>Register</Box>
           </Box>
@@ -73,11 +75,11 @@ const RegisterForm = ({submission, isSubmitting}) => {
             />
           </Box>
           <Box className={"itemBox"}>
-            <MyButton 
-              label={isSubmitting ? "Registering..." :"Register"} 
+            <MyButton
+              label={isSubmitting ? "Registering..." : "Register"}
               disabled={isSubmitting}
               startIcon={isSubmitting ? <CircularProgress size={20} /> : null}
-              type={"submit"} 
+              type={"submit"}
             />
           </Box>
         </Box>

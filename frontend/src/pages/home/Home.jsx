@@ -28,11 +28,7 @@ const Home = () => {
       {/* {['it_faculty', 'education_department', 'supervision_department','lecturer'].includes(role) && (
         <StaffHome/>
       )} */}
-      {role === 'potential_lecturer' && (
-        <PotentialHome/>
-      )}
-        
-
+      {role === "potential_lecturer" && <PotentialHome />}
     </div>
   );
 };

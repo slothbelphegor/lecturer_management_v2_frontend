@@ -58,7 +58,6 @@ const ListSchedule = () => {
   const handleOpen = (info) => {
     setOpen(true);
     setSelectedDate(info?.dateStr);
-    console.log(info?.dateStr);
   };
   const handleClose = () => setOpen(false);
 
@@ -89,12 +88,6 @@ const ListSchedule = () => {
   const getData = async () => {
     setIsLoading(true);
     try {
-      // const lecturerResponse = await AxiosInstance.get(
-      //   `lecturers/${lecturer_id}/`
-      // );
-      // setCurrentLecturer(lecturerResponse.data);
-      // console.log("Current lecturer data:", lecturerResponse.data);
-
       const schedulesResponse = await AxiosInstance.get(
         `schedules/by-lecturer/${lecturer_id}`
       );
@@ -111,7 +104,7 @@ const ListSchedule = () => {
 
       const coursesResponse = await AxiosInstance.get("courses/all_courses/");
       // setCourses(
-      //   Array.isArray(coursesResponse.data) ? coursesResponse.data.filter(course => 
+      //   Array.isArray(coursesResponse.data) ? coursesResponse.data.filter(course =>
       //       lecturerResponse.data.courses.includes(course.id)
       //     ) : []
       // );
@@ -172,7 +165,6 @@ const ListSchedule = () => {
 
   // Gửi dữ liệu về backend
   const createSubmission = (data) => {
-    console.log("Form submitted with data:", data);
     // Parse dates
     const fromDate = data.from_date;
     const toDate = data.to_date;
@@ -184,7 +176,6 @@ const ListSchedule = () => {
     let current = fromDate;
     const schedulesToCreate = [];
     while (!isAfter(current, toDate) || current == toDate) {
-      console.log(current);
       if (current.getDay() === weekday) {
         // Create dates in local timezone
         const startDateTime = new Date(
@@ -343,63 +334,62 @@ const ListSchedule = () => {
 
   const deleteSubmission = async (data) => {
     if (confirm("Are you sure?")) {
-// Parse dates and weekday
-    const fromDate = data.from_date;
-    const toDate = data.to_date;
-    const selectedcourseId = courses.find(
-      (course) => course.name == data.course
-    ).id;
-    const weekday = fromDate.getDay(); // 0 = Sunday, 1 = Monday, etc.
+      // Parse dates and weekday
+      const fromDate = data.from_date;
+      const toDate = data.to_date;
+      const selectedcourseId = courses.find(
+        (course) => course.name == data.course
+      ).id;
+      const weekday = fromDate.getDay(); // 0 = Sunday, 1 = Monday, etc.
 
-    // Find all schedules to update
-    const schedulesToDelete = schedules.filter((schedule) => {
-      const scheduleDate = schedule.start;
-      return (
-        schedule.course == selectedcourseId &&
-        (isAfter(scheduleDate, fromDate) ||
-          isSameDay(scheduleDate, fromDate)) &&
-        (isBefore(scheduleDate, toDate) || isSameDay(scheduleDate, toDate)) &&
-        getDay(scheduleDate) === weekday
+      // Find all schedules to update
+      const schedulesToDelete = schedules.filter((schedule) => {
+        const scheduleDate = schedule.start;
+        return (
+          schedule.course == selectedcourseId &&
+          (isAfter(scheduleDate, fromDate) ||
+            isSameDay(scheduleDate, fromDate)) &&
+          (isBefore(scheduleDate, toDate) || isSameDay(scheduleDate, toDate)) &&
+          getDay(scheduleDate) === weekday
+        );
+      });
+
+      const deletePromises = schedulesToDelete.map((schedule) =>
+        AxiosInstance.delete(`schedules/${schedule.id}/`)
       );
-    });
 
-    const deletePromises = schedulesToDelete.map((schedule) =>
-      AxiosInstance.delete(`schedules/${schedule.id}/`)
-    );
+      try {
+        setIsSubmitting(true);
+        setError(null);
+        await Promise.all(deletePromises);
+        setShowDeleteSuccess(true);
+      } catch (err) {
+        console.error("Error deleting schedule:", err.response?.data || err);
 
-    try {
-      setIsSubmitting(true);
-      setError(null);
-      await Promise.all(deletePromises);
-      setShowDeleteSuccess(true);
-    } catch (err) {
-      console.error("Error deleting schedule:", err.response?.data || err);
+        const errorData = err.response?.data;
+        let errorMessage;
 
-      const errorData = err.response?.data;
-      let errorMessage;
+        if (errorData) {
+          // Get the first error message from any field
+          const firstErrorField = Object.values(errorData)[0];
+          errorMessage = Array.isArray(firstErrorField)
+            ? firstErrorField[0]
+            : "Unexpected error occurred.";
+        } else {
+          errorMessage =
+            "Unexpected error occurred while deleting the schedule.";
+        }
 
-      if (errorData) {
-        // Get the first error message from any field
-        const firstErrorField = Object.values(errorData)[0];
-        errorMessage = Array.isArray(firstErrorField)
-          ? firstErrorField[0]
-          : "Unexpected error occurred.";
-      } else {
-        errorMessage = "Unexpected error occurred while deleting the schedule.";
+        setError(errorMessage);
+      } finally {
+        setIsSubmitting(false);
       }
-
-      setError(errorMessage);
-    } finally {
-      setIsSubmitting(false);
     }
-    }
-    
   };
 
   const dayClickAction = (info) => {
     handleOpen(info);
     setModalTitle("New Schedule");
-    console.log(info);
     setModalContent(
       <ScheduleInfoForm
         courses={courses}
@@ -429,17 +419,13 @@ const ListSchedule = () => {
         readOnly={role !== "education_department"}
       />
     );
-    console.log(info);
   };
 
   const selectTimeAction = (info) => {
     handleOpen(info);
     setModalTitle("New Schedule");
-    console.log(info);
     const formattedStartTime = format(new Date(info.start), "HH:mm");
     const formattedEndTime = format(new Date(info.end), "HH:mm");
-    console.log("Formatted Start Time:", formattedStartTime);
-    console.log("Formatted End Time:", formattedEndTime);
     setModalContent(
       <ScheduleInfoForm
         courses={courses}
@@ -502,7 +488,6 @@ const ListSchedule = () => {
             value={selectedCourses}
             onChange={(e) => {
               setSelectedCourses(e.target.value);
-              console.log("Selected: ", e.target.value);
             }}
           />
         </Box>

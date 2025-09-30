@@ -26,14 +26,13 @@ const Home = () => {
         </Box>
         <Box></Box>
       </Box>
-      {['it_faculty', 'education_department', 'supervision_department','lecturer'].includes(role) && (
-        <StaffHome/>
-      )}
-      {role === 'potential_lecturer' && (
-        <PotentialHome/>
-      )}
-        
-
+      {[
+        "it_faculty",
+        "education_department",
+        "supervision_department",
+        "lecturer",
+      ].includes(role) && <StaffHome />}
+      {role === "potential_lecturer" && <PotentialHome />}
     </div>
   );
 };

@@ -4,16 +4,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 import CircularProgress from "@mui/material/CircularProgress";
-
-import MyTextField from "../MyTextField";
 import MyPasswordField from "../MyPasswordField";
 import MyButton from "../MyButton";
 
 const ResetPasswordForm = ({ submission, isSubmitting }) => {
   const schema = yup.object().shape({
-    // old_password: yup
-    //   .string()
-    //   .required("Password is required"),
     new_password: yup
       .string()
       .required("New password is required")

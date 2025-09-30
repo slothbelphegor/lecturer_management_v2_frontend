@@ -338,9 +338,7 @@ export default function LecturerInfoForm({
     { id: "quota28", value: "Khác (nhập cụ thể)" },
   ];
 
-
   const getData = async () => {
-    
     setIsLoading(true);
     try {
       const courseResponse = await AxiosInstance.get("courses/all_courses/");
@@ -360,12 +358,11 @@ export default function LecturerInfoForm({
   // get data once
   useEffect(() => {
     getData();
-  }, [])
+  }, []);
 
   useEffect(() => {
-    
     if (lecturer && lecturer.exp_academic !== undefined) {
-      setIsAccepted(lecturer.status.localeCompare("Hồ sơ hợp lệ"))
+      setIsAccepted(lecturer.status.localeCompare("Hồ sơ hợp lệ"));
       const formValues = {
         name: lecturer.name,
         email: lecturer.email,
@@ -1251,7 +1248,6 @@ export default function LecturerInfoForm({
                   label={"Chấp nhận hồ sơ"}
                   onClick={handleSubmit((data) => {
                     onAccept(data);
-                    console.log(data);
                   })}
                   startIcon={
                     isSubmitting ? <CircularProgress size={20} /> : null
@@ -1269,7 +1265,6 @@ export default function LecturerInfoForm({
                   sx={{ backgroundColor: "red" }}
                   onClick={handleSubmit((data) => {
                     onReject(data);
-                    console.log(data);
                   })}
                   startIcon={
                     isSubmitting ? <CircularProgress size={20} /> : null
@@ -1288,7 +1283,6 @@ export default function LecturerInfoForm({
                     isChecking
                       ? handleSubmit((data) => {
                           onPromote(data);
-                          console.log(data);
                         })
                       : null
                   }
@@ -1315,7 +1309,6 @@ export default function LecturerInfoForm({
                     sx={{ backgroundColor: "red" }}
                     onClick={handleSubmit((data) => {
                       onReject(data);
-                      console.log(data);
                     })}
                     startIcon={
                       isSubmitting ? <CircularProgress size={20} /> : null
