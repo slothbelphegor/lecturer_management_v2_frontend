@@ -6,7 +6,7 @@ import { jwtDecode } from 'jwt-decode';
 const baseUrl = "https://lecturer-management-v2-backend.onrender.com/"
 const AxiosInstance = axios.create({
     baseURL: baseUrl,
-    timeout: 5000,
+    timeout: 10000,
     headers: {
         'Content-Type': 'application/json',
         accept: 'application/json',

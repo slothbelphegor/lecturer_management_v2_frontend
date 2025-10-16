@@ -3,7 +3,14 @@ import { Link } from "react-router-dom";
 
 import AxiosInstance from "../../components/AxiosInstance";
 
-import { Box, IconButton, Typography } from "@mui/material";
+import {
+  Box,
+  IconButton,
+  Typography,
+  CircularProgress,
+  Snackbar,
+  Alert,
+} from "@mui/material";
 import CalendarViewMonthIcon from "@mui/icons-material/CalendarViewMonth";
 import InfoIcon from "@mui/icons-material/Info";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -14,14 +21,27 @@ import { MaterialReactTable } from "material-react-table";
 const ListUser = () => {
   const [users, setUsers] = useState([]);
   const [groups, setGroups] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const handleCloseError = () => {
+    setError(null);
+  };
+
   // Su dung Axios lay du lieu tu backend
-  const getData = () => {
-    AxiosInstance.get("users/").then((res) => {
-      setUsers(res.data);
-    });
-    AxiosInstance.get("groups/").then((res) => {
-      setGroups(res.data);
-    });
+  const getData = async () => {
+    setIsLoading(true);
+    try {
+      const usersResponse = await AxiosInstance.get("users/");
+      setUsers(usersResponse.data);
+      const groupsResponse = await AxiosInstance.get("groups/");
+      setGroups(groupsResponse.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setError("Error fetching data");
+    } finally {
+      setIsLoading(false);
+    }
   };
   // Lay du lieu ngay khi tai trang
   useEffect(() => {
@@ -89,6 +109,10 @@ const ListUser = () => {
         </Box>
       </Box>
       <MaterialReactTable
+        state={{
+          isLoading: isLoading,
+          showAlertBanner: !!error,
+        }}
         columns={columns}
         data={users} // Nap du lieu vao bang
         initialState={{
@@ -139,6 +163,21 @@ const ListUser = () => {
           </Box>
         )}
       />
+      {/* Error Snackbar */}
+      <Snackbar
+        open={!!error}
+        autoHideDuration={6000}
+        onClose={handleCloseError}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert
+          onClose={handleCloseError}
+          severity="error"
+          sx={{ width: "100%" }}
+        >
+          {error}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };
