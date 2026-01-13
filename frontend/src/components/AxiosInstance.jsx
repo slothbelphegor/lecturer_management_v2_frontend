@@ -6,7 +6,7 @@ import { jwtDecode } from 'jwt-decode';
 const baseUrl = "https://lecturer-management-v2-backend.onrender.com/"
 const AxiosInstance = axios.create({
     baseURL: baseUrl,
-    timeout: 10000,
+    timeout: 100000,
     headers: {
         'Content-Type': 'application/json',
         accept: 'application/json',
@@ -16,7 +16,7 @@ const AxiosInstance = axios.create({
 // Create a new instance for token refresh to avoid interceptors loop
 const axiosRefresh = axios.create({
     baseURL: baseUrl,
-    timeout: 5000,
+    timeout: 100000,
     headers: {
         'Content-Type': 'application/json',
         accept: 'application/json',
